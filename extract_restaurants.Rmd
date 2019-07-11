@@ -8,6 +8,7 @@ output: html_notebook
 library(rvest)
 library(tidyverse)
 library(tidytext)
+library(wordcloud)
 ```
 
 ```{r}
@@ -47,3 +48,12 @@ ranked_rests <- edit(ranked_rests)
 ranked_rests %>% filter(freq > 0) %>% select(-is_rest) %>% arrange(desc(freq))
 write_csv(ranked_rests,"data/ranked_rests.csv")
 ```
+```{r}
+pal <- brewer.pal(8,"Dark2")
+ranked_rests %>% with(wordcloud(token, freq, random.order = FALSE, max.words = 50, colors=pal))
+```
+```{r}
+unigrams %>% with(wordcloud(token, freq, random.order = FALSE, max.words = 50, colors=pal))
+
+```
+
